@@ -79,7 +79,7 @@ for each colour pairing against WCAG AA and fix any that fail. Works at 360px wi
 ```text
 #file:docs/frontend-requirements.md
 #file:docs/api-contract.md
-#file:.github/instructions/frontend.instructions.md
+#file:docs/frontend.instructions.md
 
 Implement §5 (API integration) and the Login and Register pages (§6.4, §6.5).
 
@@ -189,7 +189,7 @@ Implement §6.11 (profile) and the review form and edit/delete flow from §6.3.
 ```text
 #file:docs/frontend-requirements.md
 #file:docs/api-contract.md
-#file:.github/instructions/frontend.instructions.md
+#file:docs/frontend.instructions.md
 
 Implement §6.12 (admin products and categories) and §6.13 (admin orders).
 
@@ -209,7 +209,7 @@ Run this near the end, once every page exists.
 
 ```text
 #file:docs/frontend-requirements.md
-#file:.github/instructions/frontend.instructions.md
+#file:docs/frontend.instructions.md
 
 Do a design review of the whole app against §9. Do not add features.
 
@@ -231,7 +231,7 @@ Make the fixes. Then give me a short list of what you changed and anything you l
 
 ```text
 #file:docs/frontend-requirements.md
-#file:.github/instructions/frontend.instructions.md
+#file:docs/frontend.instructions.md
 
 Audit the app against §9.7, §10 and §15. Do not add features.
 
@@ -255,7 +255,7 @@ Run these after Prompt 9, in this order. D0 is required first. After that you ca
 
 ```text
 #file:docs/frontend-requirements.md
-#file:.github/instructions/frontend.instructions.md
+#file:docs/frontend.instructions.md
 
 Set up the frontend-only demo layer described in §16.1 and §17. Do not build any module page yet.
 

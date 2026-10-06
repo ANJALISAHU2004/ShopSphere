@@ -294,6 +294,7 @@ Prefixes `/api/products` and `/api/categories`. Owner: **Dev B**.
 | POST   | `/api/categories`                   | Admin    | Create category                            | FR-PRD-08             |
 | PUT    | `/api/categories/{id}`              | Admin    | Update category                            | FR-PRD-08             |
 | DELETE | `/api/categories/{id}`              | Admin    | Delete category                            | FR-PRD-08             |
+| GET    | `/api/categories/{id}`              | Public   | Fetch one category                         | —                     |
 | GET    | `/api/products/internal/{id}`       | Internal | Product snapshot for Cart, Wishlist, Order | FR-PRD-09             |
 | PATCH  | `/api/products/internal/{id}/stock` | Internal | Decrement stock                            | FR-PRD-10             |
 
@@ -315,6 +316,18 @@ Query parameters, all optional and combinable:
 Example: `/api/products?keyword=laptop&categoryId=2&minPrice=30000&maxPrice=80000&sort=priceAsc&page=0&size=12`
 
 Returns the paginated envelope from §1.6 with `content` holding product summaries.
+
+### Category endpoints
+
+`GET /api/categories` accepts `page` and `size` and returns the paginated
+envelope from §1.6. `GET /api/categories/{id}` returns one category.
+`POST /api/categories` and `PUT /api/categories/{id}` accept
+`{ "name": "Laptops", "description": "Portable computers" }` and return the
+category response. `DELETE` returns `204`; it returns `400` while products
+still reference the category. Create returns `409` when the name is taken.
+
+The category response fields used by the frontend are `id`, `name`, and
+`description`.
 
 ### Product summary (list view)
 
@@ -564,6 +577,12 @@ Paginated, reverse chronological (FR-ORD-09). `content` holds summaries:
 }
 ```
 
+### GET `/api/orders/admin/all`
+
+Returns the standard paginated envelope from §1.6 with `content` containing
+order summaries. Each row has `orderId`, `status`, `totalAmount`, `itemCount`,
+and `placedAt`. Customer identity is not included in this response.
+
 ### PATCH `/api/orders/{id}/cancel`
 
 `400` if the order is already `SHIPPED`, `DELIVERED`, or `CANCELLED` (FR-ORD-11). Restores stock on success.
@@ -695,6 +714,12 @@ Rejections:
 ```
 
 `userName` is stored on the review at submission time (DR-05), so rendering the list needs no call to the User Service.
+
+### GET `/api/reviews/me`
+
+Returns a JSON array of `ReviewResponse` objects for the authenticated user.
+Each item has the same fields as a review in the product response above; it does
+not include product metadata.
 
 ---
 

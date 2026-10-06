@@ -1,0 +1,42 @@
+@theme {
+  --color-primary: #7c3aed;
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-text: #1e293b;
+  --color-text-muted: #64748b;
+  --color-border: #e2e8f0;
+  --color-danger: #b91c1c;
+  --color-success: #15803d;
+  --color-danger-soft: color-mix(in srgb, var(--color-danger) 10%, transparent);
+  --color-success-soft: color-mix(
+    in srgb,
+    var(--color-success) 3%,
+    transparent
+  );
+  --color-warning: #b45309;
+  --color-secondary: #ec4899;
+  --color-accent: #06b6d4;
+  --color-overlay: #0f172a;
+  --color-shadow: #1e293b;
+  --size-hairline: 0.0625rem;
+  --size-strong-rule: 0.125rem;
+  --size-active-indicator: 0.1875rem;
+  --size-focus-outline: 0.1875rem;
+  --size-focus-offset: 0.1875rem;
+  --size-spinner-border: 0.125rem;
+  --size-touch-target: 2.75rem;
+  --size-screen-reader: 0.0625rem;
+  --radius-pill: 999rem;
+  --font-size-12: 0.75rem;
+  --font-size-14: 0.875rem;
+  --font-size-16: 1rem;
+  --font-size-18: 1.125rem;
+  --font-size-22: 1.375rem;
+  --font-size-28: 1.75rem;
+  --font-size-36: 2.25rem;
+  --font-size-52: 3.25rem;
+  --font-size-page-title: var(--font-size-36);
+  --font-size-hero-title: clamp(var(--font-size-36), 6vw, var(--font-size-52));
+  --font-display: 'Newsreader Variable', serif;
+  --font-body: 'Figtree Variable', sans-serif;
+}

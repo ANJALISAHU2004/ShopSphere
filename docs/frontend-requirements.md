@@ -642,11 +642,11 @@ The contract does not define these. Ask, then record the answer in `api-contract
 | 1  | `PUT /api/cart/items/{itemId}` request and response                                                | Dev B  | Body `{ "quantity": n }`, returns the full cart      |
 | 2  | Responses of `DELETE /api/cart/items/{itemId}` and `DELETE /api/cart`                              | Dev B  | Return the updated (or empty) cart                   |
 | 3  | `GET /api/orders/{id}` response                                                                    | Dev C  | Same shape as the checkout `201`, plus `status`      |
-| 4  | `GET /api/orders/admin/all` row shape. The summary has no customer info                            | Dev C  | Add `userId` (and ideally customer name) to admin rows |
-| 5  | Admin product list needs `stockQuantity`; the public summary only has `inStock`                    | Dev B  | Fetch detail on Edit, or add the field to summaries  |
+| 4  | `GET /api/orders/admin/all` row shape. The summary has no customer info                            | Dev C  | Resolved: standard paginated order summaries, no customer identity |
+| 5  | Admin product list needs `stockQuantity`; the public summary only has `inStock`                    | Dev B  | Resolved: fetch product detail when opening Edit or stock adjustment |
 | 6  | `GET /api/reviews/product/{id}/summary` response                                                   | Dev B  | `{ productId, averageRating, reviewCount }`          |
 | 7  | `PUT /api/reviews/{id}` body                                                                       | Dev B  | `{ rating, comment }`                                |
-| 8  | Category create/update body and validation rules                                                   | Dev B  | `{ name, description }`                              |
+| 8  | Category create/update body and validation rules                                                   | Dev B  | Resolved: `{ name, description }`, name max 80 and description max 255 |
 | 9  | `GET /api/payments/order/{orderId}` response                                                       | Dev C  | Same as `PaymentResponseDto`                         |
 | 10 | Product detail: do `averageRating` and `reviewCount` appear? The text says yes; the example says no | Dev B  | No. Use the reviews endpoint                         |
 | 11 | Is `isDefault` returned as `isDefault` or `default` (Jackson often renames boolean `isX` getters)? | Dev A  | `isDefault`. Verify against a real response          |
