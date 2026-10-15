@@ -1,0 +1,301 @@
+-- =====================================================
+-- ShopSphere seed data (MySQL)
+-- Database : shopsphere_product
+-- Tables   : categories, products
+-- Scope    : clothing & accessories only
+-- =====================================================
+
+CREATE DATABASE IF NOT EXISTS shopsphere_product;
+USE shopsphere_product;
+
+-- -----------------------------------------------------
+-- categories
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS shopsphere_product.categories (
+    id          BIGINT        NOT NULL AUTO_INCREMENT,
+    name        VARCHAR(100)  NOT NULL,
+    description TEXT,
+    image_url   VARCHAR(255),
+    active      BOOLEAN       NOT NULL DEFAULT TRUE,
+    created_at  TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at  TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_categories_name (name)
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- products
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS shopsphere_product.products (
+    id             BIGINT         NOT NULL AUTO_INCREMENT,
+    category_id    BIGINT         NOT NULL,
+    name           VARCHAR(120)   NOT NULL,
+    description    TEXT,
+    price          DECIMAL(10,2)  NOT NULL,
+    stock_quantity INT            NOT NULL DEFAULT 0,
+    image_url      VARCHAR(255),
+    active         BOOLEAN        NOT NULL DEFAULT TRUE,
+    created_at     TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at     TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_products_category FOREIGN KEY (category_id)
+        REFERENCES shopsphere_product.categories (id)
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- categories data
+-- -----------------------------------------------------
+INSERT INTO shopsphere_product.categories (id, name, description, image_url, active) VALUES
+(1, 'Men''s Clothing',     'Shirts, t-shirts, jeans, jackets and more for men',          'https://placehold.co/600x400?text=Mens+Clothing', TRUE),
+(2, 'Women''s Clothing',   'Dresses, tops, jeans, jackets and more for women',           'https://placehold.co/600x400?text=Womens+Clothing', TRUE),
+(3, 'Footwear',            'Sneakers, formal shoes, sandals, boots and flats',           'https://placehold.co/600x400?text=Footwear', TRUE),
+(4, 'Jewelry',             'Necklaces, bracelets, rings and earrings',                   'https://placehold.co/600x400?text=Jewelry', TRUE),
+(5, 'Perfumes',            'Perfumes, colognes, attars and fragrance gift sets',         'https://placehold.co/600x400?text=Perfumes', TRUE),
+(6, 'Bags & Backpacks',    'Backpacks, tote bags, sling bags and messenger bags',        'https://placehold.co/600x400?text=Bags', TRUE),
+(7, 'Watches',             'Analog, digital and fashion watches',                        'https://placehold.co/600x400?text=Watches', TRUE),
+(8, 'Accessories',         'Belts, wallets, sunglasses, caps and scarves',               'https://placehold.co/600x400?text=Accessories', TRUE);
+
+-- -----------------------------------------------------
+-- products data
+-- (ids 1-8 and 15-20 come from your fakestoreapi JSON;
+--  electronics items 9-14 were intentionally skipped)
+-- -----------------------------------------------------
+INSERT INTO shopsphere_product.products
+(id, category_id, name, description, price, stock_quantity, image_url, active) VALUES
+
+-- ---------- From fakestoreapi: Men's clothing / bag ----------
+(1, 6, 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
+ 'Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday',
+ 109.95, 60, 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png', TRUE),
+
+(2, 1, 'Mens Casual Premium Slim Fit T-Shirts',
+ 'Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.',
+ 22.30, 120, 'https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_t.png', TRUE),
+
+(3, 1, 'Mens Cotton Jacket',
+ 'Great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling, traveling or other outdoors. Good gift choice for you or your family member. A warm hearted love to Father, husband or son in this thanksgiving or Christmas Day.',
+ 55.99, 80, 'https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_t.png', TRUE),
+
+(4, 1, 'Mens Casual Slim Fit',
+ 'The color could be slightly different between on the screen and in practice. Please note that body builds vary by person, therefore, detailed size information should be reviewed below on the product description.',
+ 15.99, 150, 'https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_t.png', TRUE),
+
+-- ---------- From fakestoreapi: Jewelry ----------
+(5, 4, 'John Hardy Women''s Legends Naga Gold & Silver Dragon Station Chain Bracelet',
+ 'From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean''s pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.',
+ 695.00, 10, 'https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_t.png', TRUE),
+
+(6, 4, 'Solid Gold Petite Micropave',
+ 'Satisfaction Guaranteed. Return or exchange any order within 30 days. Designed and sold by Hafeez Center in the United States.',
+ 168.00, 25, 'https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_t.png', TRUE),
+
+(7, 4, 'White Gold Plated Princess',
+ 'Classic Created Wedding Engagement Solitaire Diamond Promise Ring for Her. Gifts to spoil your love more for Engagement, Wedding, Anniversary, Valentine''s Day.',
+ 9.99, 200, 'https://fakestoreapi.com/img/71YAIFU48IL._AC_UL640_QL65_ML3_t.png', TRUE),
+
+(8, 4, 'Pierced Owl Rose Gold Plated Stainless Steel Double',
+ 'Rose Gold Plated Double Flared Tunnel Plug Earrings. Made of 316L Stainless Steel.',
+ 10.99, 180, 'https://fakestoreapi.com/img/51UDEzMJVpL._AC_UL640_QL65_ML3_t.png', TRUE),
+
+-- ---------- From fakestoreapi: Women's clothing ----------
+(15, 2, 'BIYLACLESEN Women''s 3-in-1 Snowboard Jacket Winter Coats',
+ 'US standard size, please choose size as your usual wear. Material: 100% Polyester; Detachable Liner Fabric: Warm Fleece. Stand collar liner jacket keeps you warm in cold weather. 2 zippered hand pockets, 2 zippered chest pockets and 1 hidden inside pocket. Adjustable and detachable hood and adjustable cuff to prevent wind and water. 3-in-1 detachable design: wear the coat and inner separately or together. Suitable for different seasons and climates.',
+ 56.99, 45, 'https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_t.png', TRUE),
+
+(16, 2, 'Lock and Love Women''s Removable Hooded Faux Leather Moto Biker Jacket',
+ '100% polyurethane (shell), 100% polyester (lining), 75% polyester 25% cotton (sweater). Faux leather material for style and comfort. 2 front pockets, 2-for-one hooded denim style faux leather jacket, button detail on waist, detail stitching at sides. Hand wash only, do not bleach, line dry, do not iron.',
+ 29.95, 70, 'https://fakestoreapi.com/img/81XH0e8fefL._AC_UY879_t.png', TRUE),
+
+(17, 2, 'Rain Jacket Women Windbreaker Striped Climbing Raincoats',
+ 'Lightweight, perfect for trips or casual wear. Long sleeve with hood and adjustable drawstring waist. Button and zipper front closure, fully striped lining, 2 side pockets. Covers the hips, with a generous hood and adjustable drawstrings.',
+ 39.99, 90, 'https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2t.png', TRUE),
+
+(18, 2, 'MBJ Women''s Solid Short Sleeve Boat Neck V',
+ '95% Rayon 5% Spandex. Do not bleach. Lightweight fabric with great stretch for comfort. Ribbed on sleeves and neckline, double stitching on bottom hem.',
+ 9.85, 160, 'https://fakestoreapi.com/img/71z3kpMAYsL._AC_UY879_t.png', TRUE),
+
+(19, 2, 'Opna Women''s Short Sleeve Moisture',
+ '100% polyester, machine wash, pre-shrunk for a great fit. Lightweight, roomy and highly breathable moisture-wicking fabric with a comfortable V-neck collar and a slimmer fit for a sleek, feminine silhouette.',
+ 7.95, 220, 'https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_t.png', TRUE),
+
+(20, 2, 'DANVOUY Womens T Shirt Casual Cotton Short',
+ '95% cotton, 5% spandex. Casual short sleeve, letter print, V-neck fashion tee. Soft fabric with some stretch. Suitable for casual, office, beach, school, home and street wear in all seasons.',
+ 12.99, 140, 'https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_t.png', TRUE),
+
+-- ---------- Additional: Footwear ----------
+(21, 3, 'Men''s Lightweight Running Shoes',
+ 'Breathable mesh upper with cushioned EVA midsole and non-slip rubber outsole. Ideal for running, gym and everyday wear.',
+ 49.99, 100, 'https://placehold.co/600x600?text=Running+Shoes', TRUE),
+
+(22, 3, 'Unisex Classic White Sneakers',
+ 'Clean low-top sneakers with a durable synthetic leather upper and cushioned insole. Goes with every outfit.',
+ 39.50, 130, 'https://placehold.co/600x600?text=White+Sneakers', TRUE),
+
+(23, 3, 'Men''s Leather Formal Oxford Shoes',
+ 'Classic lace-up Oxford shoes in genuine leather with a padded footbed. Perfect for office and formal events.',
+ 64.99, 55, 'https://placehold.co/600x600?text=Oxford+Shoes', TRUE),
+
+(24, 3, 'Women''s Block Heel Sandals',
+ 'Comfortable block heel sandals with an adjustable ankle strap and soft footbed. Great for parties and casual outings.',
+ 34.99, 75, 'https://placehold.co/600x600?text=Block+Heel+Sandals', TRUE),
+
+(25, 3, 'Women''s Suede Ankle Boots',
+ 'Stylish faux suede ankle boots with a side zip and a stable low heel. Warm lining for cooler days.',
+ 59.99, 40, 'https://placehold.co/600x600?text=Ankle+Boots', TRUE),
+
+(26, 3, 'Casual Canvas Slip-On Shoes',
+ 'Easy slip-on canvas shoes with a flexible rubber sole. Lightweight and comfortable for daily use.',
+ 24.99, 170, 'https://placehold.co/600x600?text=Canvas+Slip-Ons', TRUE),
+
+(27, 3, 'Men''s Trail Hiking Boots',
+ 'Water-resistant hiking boots with ankle support and a high-grip lug sole for rough terrain.',
+ 84.00, 35, 'https://placehold.co/600x600?text=Hiking+Boots', TRUE),
+
+(28, 3, 'Women''s Classic Ballet Flats',
+ 'Soft, flexible ballet flats with a cushioned insole. A simple everyday pair for work or casual wear.',
+ 27.50, 110, 'https://placehold.co/600x600?text=Ballet+Flats', TRUE),
+
+-- ---------- Additional: Men's clothing ----------
+(29, 1, 'Men''s Classic Straight Fit Denim Jeans',
+ 'Durable stretch denim jeans with a classic straight fit and five-pocket styling. Mid-rise waist.',
+ 34.99, 130, 'https://placehold.co/600x600?text=Mens+Denim+Jeans', TRUE),
+
+(30, 1, 'Men''s Formal Cotton Shirt',
+ 'Wrinkle-resistant full sleeve cotton shirt with a spread collar. Ideal for office and formal occasions.',
+ 29.99, 110, 'https://placehold.co/600x600?text=Formal+Shirt', TRUE),
+
+(31, 1, 'Men''s Fleece Hooded Sweatshirt',
+ 'Warm fleece-lined hoodie with a kangaroo pocket and adjustable drawstring hood.',
+ 39.99, 85, 'https://placehold.co/600x600?text=Hooded+Sweatshirt', TRUE),
+
+(32, 1, 'Men''s Cotton Chino Shorts',
+ 'Lightweight stretch cotton chino shorts with a comfortable regular fit. Perfect for summer.',
+ 22.99, 95, 'https://placehold.co/600x600?text=Chino+Shorts', TRUE),
+
+(33, 1, 'Men''s Wool Blend Blazer',
+ 'Tailored single-breasted blazer in a wool blend fabric with a notch lapel and two-button closure.',
+ 99.00, 30, 'https://placehold.co/600x600?text=Wool+Blazer', TRUE),
+
+(34, 1, 'Men''s Crew Neck Polo T-Shirt',
+ 'Breathable piqué cotton polo with a ribbed collar and a two-button placket.',
+ 19.99, 180, 'https://placehold.co/600x600?text=Polo+T-Shirt', TRUE),
+
+-- ---------- Additional: Women's clothing ----------
+(35, 2, 'Women''s Floral Print Maxi Dress',
+ 'Flowy floral maxi dress with a V-neckline and a cinched waist. Soft, breathable fabric for summer days.',
+ 44.99, 65, 'https://placehold.co/600x600?text=Floral+Maxi+Dress', TRUE),
+
+(36, 2, 'Women''s High-Waist Skinny Jeans',
+ 'Stretch denim skinny jeans with a high waist and a flattering fit.',
+ 36.99, 100, 'https://placehold.co/600x600?text=Skinny+Jeans', TRUE),
+
+(37, 2, 'Women''s Knit Cardigan Sweater',
+ 'Soft open-front knit cardigan with long sleeves. Easy to layer over any outfit.',
+ 41.50, 60, 'https://placehold.co/600x600?text=Knit+Cardigan', TRUE),
+
+(38, 2, 'Women''s Embroidered Cotton Kurti',
+ 'Straight-cut cotton kurti with neckline embroidery and three-quarter sleeves. Comfortable for daily and festive wear.',
+ 24.99, 120, 'https://placehold.co/600x600?text=Cotton+Kurti', TRUE),
+
+(39, 2, 'Women''s Pleated Midi Skirt',
+ 'Elegant pleated midi skirt with an elastic waistband and a flowy silhouette.',
+ 28.99, 70, 'https://placehold.co/600x600?text=Pleated+Midi+Skirt', TRUE),
+
+(40, 2, 'Women''s High-Waist Yoga Leggings',
+ 'Four-way stretch, moisture-wicking leggings with a wide waistband. Suitable for yoga, gym and daily wear.',
+ 21.99, 150, 'https://placehold.co/600x600?text=Yoga+Leggings', TRUE),
+
+-- ---------- Additional: Jewelry ----------
+(41, 4, 'Sterling Silver Hoop Earrings',
+ '925 sterling silver classic hoop earrings with a secure click-top closure. Lightweight for all-day wear.',
+ 32.00, 90, 'https://placehold.co/600x600?text=Silver+Hoop+Earrings', TRUE),
+
+(42, 4, 'Freshwater Pearl Pendant Necklace',
+ 'Elegant pearl pendant on a gold plated chain with an adjustable length.',
+ 54.99, 40, 'https://placehold.co/600x600?text=Pearl+Necklace', TRUE),
+
+(43, 4, 'Men''s Stainless Steel Chain Bracelet',
+ 'Durable, tarnish-resistant stainless steel link bracelet with a secure lobster clasp.',
+ 18.99, 100, 'https://placehold.co/600x600?text=Steel+Bracelet', TRUE),
+
+(44, 4, 'Rose Gold Stackable Rings Set (5 Pieces)',
+ 'Set of five minimalist stackable rings in rose gold plating. Mix and match for your own style.',
+ 23.99, 85, 'https://placehold.co/600x600?text=Stackable+Rings', TRUE),
+
+(45, 4, 'Gold Plated Jhumka Earrings',
+ 'Traditional gold plated jhumka earrings with intricate detailing. Perfect for festive and wedding wear.',
+ 15.99, 110, 'https://placehold.co/600x600?text=Jhumka+Earrings', TRUE),
+
+-- ---------- Additional: Perfumes ----------
+(46, 5, 'Floral Eau de Parfum for Women (50 ml)',
+ 'A fresh floral fragrance with notes of jasmine, rose and soft musk. Long-lasting for everyday wear.',
+ 45.00, 60, 'https://placehold.co/600x600?text=Floral+Perfume', TRUE),
+
+(47, 5, 'Woody Eau de Toilette for Men (100 ml)',
+ 'A bold woody scent with notes of cedar, bergamot and amber. Suitable for day and evening.',
+ 39.99, 70, 'https://placehold.co/600x600?text=Mens+Perfume', TRUE),
+
+(48, 5, 'Unisex Citrus Cologne (75 ml)',
+ 'Light and refreshing citrus cologne with lemon, mint and white tea notes.',
+ 34.50, 80, 'https://placehold.co/600x600?text=Citrus+Cologne', TRUE),
+
+(49, 5, 'Luxury Oud Attar Perfume Oil (12 ml)',
+ 'Alcohol-free concentrated oud attar with a rich, long-lasting aroma.',
+ 29.99, 50, 'https://placehold.co/600x600?text=Oud+Attar', TRUE),
+
+(50, 5, 'Mini Perfume Gift Set (4 x 20 ml)',
+ 'Gift set of four mini perfumes in assorted fragrances. Great for gifting or travel.',
+ 24.99, 90, 'https://placehold.co/600x600?text=Perfume+Gift+Set', TRUE),
+
+-- ---------- Additional: Bags ----------
+(51, 6, 'Women''s Faux Leather Tote Bag',
+ 'Spacious faux leather tote with a zip closure, inner pockets and sturdy handles.',
+ 69.99, 45, 'https://placehold.co/600x600?text=Leather+Tote+Bag', TRUE),
+
+(52, 6, 'Unisex Crossbody Sling Bag',
+ 'Compact water-resistant sling bag with an adjustable strap and multiple compartments.',
+ 26.99, 120, 'https://placehold.co/600x600?text=Sling+Bag', TRUE),
+
+(53, 6, 'Men''s Leather Messenger Bag',
+ 'Classic messenger bag in genuine leather with a padded laptop compartment up to 14 inches.',
+ 79.00, 30, 'https://placehold.co/600x600?text=Messenger+Bag', TRUE),
+
+-- ---------- Additional: Watches ----------
+(54, 7, 'Men''s Analog Leather Strap Watch',
+ 'Classic analog watch with a stainless steel case, leather strap and water resistance up to 30 m.',
+ 59.99, 50, 'https://placehold.co/600x600?text=Analog+Watch', TRUE),
+
+(55, 7, 'Women''s Rose Gold Mesh Strap Watch',
+ 'Slim rose gold watch with a mesh strap and a minimalist dial.',
+ 49.99, 55, 'https://placehold.co/600x600?text=Rose+Gold+Watch', TRUE),
+
+(56, 7, 'Unisex Digital Sports Watch',
+ 'Shock-resistant digital watch with stopwatch, alarm, backlight and water resistance.',
+ 29.99, 100, 'https://placehold.co/600x600?text=Digital+Sports+Watch', TRUE),
+
+-- ---------- Additional: Accessories ----------
+(57, 8, 'Men''s Genuine Leather Belt',
+ 'Durable genuine leather belt with a classic pin buckle. Suitable for formal and casual wear.',
+ 19.99, 140, 'https://placehold.co/600x600?text=Leather+Belt', TRUE),
+
+(58, 8, 'Polarized Aviator Sunglasses',
+ 'UV400 polarized aviator sunglasses with a lightweight metal frame.',
+ 24.99, 95, 'https://placehold.co/600x600?text=Aviator+Sunglasses', TRUE),
+
+(59, 8, 'Cotton Baseball Cap',
+ 'Adjustable cotton baseball cap with an embroidered logo and a curved brim.',
+ 12.99, 200, 'https://placehold.co/600x600?text=Baseball+Cap', TRUE),
+
+(60, 8, 'Women''s Printed Silk Scarf',
+ 'Soft silk-feel printed scarf that can be worn on the neck, head or tied to a bag.',
+ 17.50, 80, 'https://placehold.co/600x600?text=Silk+Scarf', TRUE),
+
+(61, 8, 'Men''s Bifold Leather Wallet',
+ 'Slim bifold wallet with RFID protection, multiple card slots and a coin pocket.',
+ 21.99, 130, 'https://placehold.co/600x600?text=Leather+Wallet', TRUE);
+
+-- -----------------------------------------------------
+-- Quick check
+-- -----------------------------------------------------
+-- SELECT c.name, COUNT(*) AS total FROM shopsphere_product.products p
+-- JOIN shopsphere_product.categories c ON c.id = p.category_id GROUP BY c.name;
